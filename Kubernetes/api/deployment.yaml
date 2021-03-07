@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  api
+spec:
+  selector:
+    matchLabels:
+      app: api
+  replicas: 1
+  # Estragégias de atualização dos pods
+  # strategy:
+  #   rollingUpdate:
+  #     maxSurge: 25%
+  #     maxUnavailable: 25%
+  #   type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app:  api
+    spec:
+      containers:
+      - name:  api
+        image:  victormagalhaes/api-produto:v1
+        ports:
+          - containerPort:  8080
+        env:
+          - name: MONGODB_URI
+            value: mongodb://mongouser:mongopwd@localhost:27017

@@ -55,18 +55,26 @@ app.put('/stress/:elemento/tempostress/:tempoStress/intervalo/:intervalo/ciclos/
 
 app.use('/api/produto', product);
 
-var developer_db_url = 'mongodb://mongouser:mongopwd@localhost:27017/admin';
+var developer_db_url = 'mongodb://mongouser:mongopwd@localhost:27017';
 var mongoUrl = process.env.MONGODB_URI || developer_db_url;
 
 mongoose.Promise = global.Promise;
 
 var connectWithRetry = function () {
-    return mongoose.connect(mongoUrl, function (err) {
-        if (err) {
-            console.error('Failed to connect to mongo on startup - retrying in 5 sec', err);
-            setTimeout(connectWithRetry, 5000);
+    return mongoose.connect(
+        mongoUrl, 
+        {
+            useNewUrlParser: true, 
+            useUnifiedTopology: true,
+            serverSelectionTimeoutMS: 5000
+        },
+        function (err) {
+            if (err) {
+                console.error('Failed to connect to mongo on startup - retrying in 5 sec', err);
+                setTimeout(connectWithRetry, 5000);
+            }
         }
-    });
+    );
 };
 
 connectWithRetry();
