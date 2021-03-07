@@ -29,10 +29,15 @@ jobs:
           cd ./src          
           npm run test
   
-  docker-push:
+  docker:
     runs-on: ubuntu-latest
     needs: [test]
     steps:
+      - name: Docker Login
+      - uses: docker/login-action@v1.8.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
       - uses: actions/checkout@v2
       - uses: docker/build-push-action@v2.3.0
         with:
@@ -41,33 +46,3 @@ jobs:
             victormagalhaes/api-produto:latest
             victormagalhaes/api-produto:${{github.run_number}}
           push: true
-          
-  
-
-#   publish-npm:
-#     needs: build
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v2
-#       - uses: actions/setup-node@v1
-#         with:
-#           node-version: 12
-#           registry-url: https://registry.npmjs.org/
-#       - run: npm ci
-#       - run: npm publish
-#         env:
-#           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
-
-#   publish-gpr:
-#     needs: build
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v2
-#       - uses: actions/setup-node@v1
-#         with:
-#           node-version: 12
-#           registry-url: https://npm.pkg.github.com/
-#       - run: npm ci
-#       - run: npm publish
-#         env:
-#           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
