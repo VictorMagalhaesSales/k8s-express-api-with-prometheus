@@ -27,8 +27,6 @@ jobs:
       - name: Executando testes da aplicação
         run: |
           cd ./src          
-          ls
-          cat package.json
           npm run test
   
   docker-push:
