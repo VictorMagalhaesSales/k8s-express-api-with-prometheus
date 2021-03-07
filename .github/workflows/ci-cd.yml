@@ -33,7 +33,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [test]
     steps:
-      - name: Docker Login
       - uses: docker/login-action@v1.8.0
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
