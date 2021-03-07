@@ -1,0 +1,60 @@
+name: CI/CD
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          context: ./src
+          node-version: 12
+      - name: Instalando dependências e buildando aplicação
+        run: |
+          cd ./src
+          rm -f package-lock.json
+          npm install
+          npm run build
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          context: ./src
+      - name: Executando testes da aplicação
+        run: |
+          cd ./src
+          npm run test
+
+#   publish-npm:
+#     needs: build
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - uses: actions/setup-node@v1
+#         with:
+#           node-version: 12
+#           registry-url: https://registry.npmjs.org/
+#       - run: npm ci
+#       - run: npm publish
+#         env:
+#           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+
+#   publish-gpr:
+#     needs: build
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - uses: actions/setup-node@v1
+#         with:
+#           node-version: 12
+#           registry-url: https://npm.pkg.github.com/
+#       - run: npm ci
+#       - run: npm publish
+#         env:
+#           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
