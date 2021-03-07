@@ -8,11 +8,11 @@ spec:
       app: api
   replicas: 1
   # Estragégias de atualização dos pods
-  # strategy:
-  #   rollingUpdate:
-  #     maxSurge: 25%
-  #     maxUnavailable: 25%
-  #   type: RollingUpdate
+  strategy:
+    rollingUpdate:
+      maxSurge: 25% # Novos pods na atualização
+      maxUnavailable: 25% # Pods detonados na atualização
+    type: RollingUpdate
   template:
     metadata:
       labels:

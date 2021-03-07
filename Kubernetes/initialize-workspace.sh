@@ -12,4 +12,5 @@ helm install prometheus prometheus-community/prometheus --values ../Prometheus/v
 helm uninstall grafana
 helm install grafana grafana/grafana --values ../Grafana/values.yaml
 clear
-echo '============ Workspace inicializado com sucesso!! ============'
+echo '============ Workspace inicializado com sucesso!! ============';
+kubectl port-forward service/grafana 8282:80
