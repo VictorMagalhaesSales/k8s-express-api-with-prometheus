@@ -9,5 +9,7 @@ kubectl apply -f api/service.yaml
 
 helm uninstall prometheus
 helm install prometheus prometheus-community/prometheus --values ../Prometheus/values.yaml
+helm uninstall grafana
+helm install grafana grafana/grafana --values ../Grafana/values.yaml
 clear
 echo '============ Workspace inicializado com sucesso!! ============'
