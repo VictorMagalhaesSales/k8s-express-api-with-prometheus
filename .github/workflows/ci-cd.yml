@@ -26,9 +26,9 @@ jobs:
       - uses: actions/setup-node@v1
       - name: Executando testes da aplicação
         run: |
+          cd ./src          
           ls
           cat package.json
-          cd ./src
           npm run test
   
   docker-push:
