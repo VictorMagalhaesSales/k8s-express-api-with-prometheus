@@ -7,6 +7,6 @@ spec:
     app: api
   type: LoadBalancer
   ports:
-  - port: 80
+  - port: 8181
     targetPort: 8080
     nodePort: 30000
